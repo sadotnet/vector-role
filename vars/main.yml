@@ -1,0 +1,2 @@
+---
+vector_config_template: "templates/vector.toml.j2"
