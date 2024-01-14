@@ -1,0 +1,22 @@
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Check if the Vector configuration is valid
+    command: vector validate
+    register: vector_config_validation
+    
+  - name: Assert that the Vector configuration is valid
+    assert:
+      that: vector_config_validation.rc == 0
+      fail_msg: "Vector configuration is invalid"
+      success_msg: "Vector configuration is valid"
+
+  - name: Check if Vector is running successfully
+    command: systemctl status vector
+    register: vector_status
+    
+  - name: Assert that Vector is running
+    assert:
+      that: '"running" in vector_status.stdout'
+      fail_msg: "Vector is not running"
+      success_msg: "Vector is running successfully"
